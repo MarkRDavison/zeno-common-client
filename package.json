@@ -20,8 +20,12 @@
   "author": "Mark Davison",
   "license": "MIT",
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.13.0",
+    "@testing-library/react": "^11.2.7",
     "@types/express": "^4.17.12",
     "@types/jest": "^26.0.23",
+    "@types/react": "^17.0.9",
+    "@types/react-dom": "^17.0.6",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "eslint": "^7.28.0",
@@ -37,6 +41,8 @@
   },
   "dependencies": {
     "@markrdavison/zeno-common": "^0.1.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
