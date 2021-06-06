@@ -2,7 +2,6 @@ import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import Form, { BaseErrorMessage, BaseForm, BaseInput, Validate, Required } from './Form';
 
-
 interface FormData {
     username: string
     password: string

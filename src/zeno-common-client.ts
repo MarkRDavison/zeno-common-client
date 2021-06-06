@@ -1,5 +1,7 @@
-import { Alert } from './enums/Alerts';
+import { Alert } from './alerts';
+import Form, { BaseErrorMessage, BaseForm, BaseInput, Validate, Required } from './Form';
 
 export {
-    Alert
+    Alert,
+    Form, BaseErrorMessage, BaseForm, BaseInput, Validate, Required
 };
