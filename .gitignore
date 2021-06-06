@@ -1,0 +1,8 @@
+node_modules
+.env
+*.pem
+*.key
+*.crt
+dist/
+coverage/
+.vscode/
