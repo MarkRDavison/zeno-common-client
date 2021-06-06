@@ -1,8 +1,8 @@
 {
   "name": "@markrdavison/zeno-common-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Common client utilities",
-  "main": "dist/zeno-common-server.js",
+  "main": "dist/zeno-common-client.js",
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "test": "jest --verbose --runInBand --coverage",
