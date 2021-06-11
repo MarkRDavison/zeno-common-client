@@ -11,7 +11,8 @@ interface FormProps {
     validate: Validate<FormData>
     initialData: FormData
     required?: Required<FormData>
-    handleSubmit?: (values: FormData) => Promise<void>
+    handleSubmit?: (values: FormData) => Promise<boolean>
+    afterSubmit?: (success: boolean) => void
 }
 
 const FormComponent = (props: FormProps): JSX.Element => {
@@ -20,7 +21,8 @@ const FormComponent = (props: FormProps): JSX.Element => {
             initialValues={props.initialData}
             required={props.required}
             validator={props.validate}
-            handleSubmit={props.handleSubmit}>
+            handleSubmit={props.handleSubmit}
+            afterSubmit={props.afterSubmit}>
             {(isSubmitting, invalidRequired) =>
             <BaseForm>
                 <BaseInput type="text" name="username" disabled={isSubmitting} label="Username" />
@@ -122,7 +124,8 @@ describe('Form', () => {
                 password: true
             }
         });
-        const handleSubmit = jest.fn();        
+        const handleSubmit = jest.fn();
+        handleSubmit.mockReturnValue(true);
         const {
             getByTestId
         } = render(<FormComponent validate={validator} initialData={initialData} handleSubmit={handleSubmit} />);
@@ -154,6 +157,7 @@ describe('Form', () => {
             }
         });
         const handleSubmit = jest.fn();        
+        handleSubmit.mockReturnValue(Promise.resolve(true));
         const {
             getByTestId
         } = render(<FormComponent validate={validator} initialData={initialData} handleSubmit={handleSubmit} />);

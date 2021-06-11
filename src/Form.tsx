@@ -21,7 +21,8 @@ interface FormProps<T> {
     initialValues: T
     required?: Required<T>
     validator: Validate<T>
-    handleSubmit: (values: T) => Promise<void>
+    handleSubmit: (values: T) => Promise<boolean>
+    afterSubmit: (success: boolean) => void
     children: (
         isSubmitting: boolean,
         invalidRequired: boolean,
@@ -88,10 +89,11 @@ export default function Form<T>(props: FormProps<T>): JSX.Element {
         }
         
         setIsSubmitting(true);
-        await props.handleSubmit(formData);
+        const result = await props.handleSubmit(formData);
         setIsSubmitting(false);
+        return result;
     };
-
+    
     let invalidRequired = false;
 
     for (const key in required) {
@@ -101,7 +103,7 @@ export default function Form<T>(props: FormProps<T>): JSX.Element {
     }
 
     return (
-        <FormProvider value={{formData, touched, errors, handleChange, formSubmit}}>
+        <FormProvider value={{formData, touched, errors, handleChange, formSubmitHandle: (event: FormEvent<HTMLElement>) => formSubmit(event).then(props.afterSubmit)}}>
             {props.children(isSubmitting, invalidRequired, formData, touched, errors)}
         </FormProvider>
     );
@@ -128,8 +130,8 @@ export const BaseForm = (props: BaseFormProps): JSX.Element => {
     return (
         <FormConsumer>
             {
-                ({formSubmit}) =>
-                <form data-testid='zeno-form' onSubmit={formSubmit}>
+                ({formSubmitHandle}) =>
+                <form data-testid='zeno-form' onSubmit={formSubmitHandle}>
                     {props.children}
                 </form>
             }
