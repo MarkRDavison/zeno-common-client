@@ -18,12 +18,14 @@ test:
   stage: test
   image: node:alpine
   script:
+    - npm ci
     - npm run test
 
 lint:
   stage: test
   image: node:alpine
   script:
+    - npm ci
     - npm run lint
 
 publish:
