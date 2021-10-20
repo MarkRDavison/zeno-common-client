@@ -1,0 +1,36 @@
+variables:
+  GIT_STRATEGY: clone
+  APP_NAME: zeno-common-client
+
+stages:
+  - build
+  - test
+  - publish
+
+build:
+  stage: build
+  image: node:alpine
+  script:
+    - npm ci
+    - npm run build
+
+test:
+  stage: test
+  image: node:alpine
+  script:
+    - npm run test
+
+lint:
+  stage: test
+  image: node:alpine
+  script:
+    - npm run lint
+
+publish:
+  stage: publish
+  image: node:alpine
+  script:
+    - npm config set //gitlab.markdavison.kiwi/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}
+    - npm ci
+    - npm run build
+    - npm publish
