@@ -20,6 +20,13 @@ test:
   script:
     - npm ci
     - npm run test
+  artifacts:
+      when: always
+      reports:
+        cobertura:
+          - ./coverage/clover.xml
+        junit:
+          - ./junit.xml
 
 lint:
   stage: test
