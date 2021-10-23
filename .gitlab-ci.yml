@@ -40,7 +40,7 @@ publish:
   image: node:alpine
   script:
     - echo '@mark.davison:registry=https://gitlab.markdavison.kiwi/api/v4/projects/${CI_PROJECT_ID}/packages/npm/' >> .npmrc
-    - echo '//https://gitlab.markdavison.kiwi/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}' >> .npmrc
+    - npm config set //https://gitlab.markdavison.kiwi/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}
     - npm ci
     - npm run build
     - npm publish
