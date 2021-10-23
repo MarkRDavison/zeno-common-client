@@ -21,9 +21,9 @@ export interface FormProps<T> {
     initialValues: T
     required?: Required<T>
     validator: Validate<T>
-    handleSubmit: (values: T) => Promise<boolean>
-    afterSubmit: (success: boolean) => void
-    children: (
+    handleSubmit?: (values: T) => Promise<boolean>
+    afterSubmit?: (success: boolean) => void
+    children?: (
         isSubmitting: boolean,
         invalidRequired: boolean,
         values: T, 

@@ -1,26 +1,18 @@
 import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
-import Form, { BaseErrorMessage, BaseForm, BaseInput, Validate, Required } from './Form';
+import Form, { BaseErrorMessage, BaseForm, BaseInput, Validate, Required, FormProps } from './Form';
 
 interface FormData {
     username: string
     password: string
 }
 
-interface FormProps {
-    validate: Validate<FormData>
-    initialData: FormData
-    required?: Required<FormData>
-    handleSubmit?: (values: FormData) => Promise<boolean>
-    afterSubmit?: (success: boolean) => void
-}
-
-const FormComponent = (props: FormProps): JSX.Element => {
+const FormComponent = (props: FormProps<FormData>): JSX.Element => {
     return (
         <Form<FormData>
-            initialValues={props.initialData}
+            initialValues={props.initialValues}
             required={props.required}
-            validator={props.validate}
+            validator={props.validator}
             handleSubmit={props.handleSubmit}
             afterSubmit={props.afterSubmit}>
             {(isSubmitting, invalidRequired) =>
@@ -49,7 +41,7 @@ describe('Form', () => {
 
     test('created with initial required values does not invoke the validator', () => {
         const validator = jest.fn();
-        render(<FormComponent validate={validator} initialData={initialData} required={required} />);
+        render(<FormComponent validator={validator} initialValues={initialData} required={required} />);
         expect(validator).toHaveBeenCalledTimes(0);
     });
 
@@ -63,7 +55,7 @@ describe('Form', () => {
             },
             required: required
         });
-        render(<FormComponent validate={validator} initialData={initialData} />);
+        render(<FormComponent validator={validator} initialValues={initialData} />);
         expect(validator).toHaveBeenCalledTimes(1);
     });
 
@@ -81,7 +73,7 @@ describe('Form', () => {
         });
         const {
             queryByTestId
-        } = render(<FormComponent validate={validator} initialData={initialData} />);
+        } = render(<FormComponent validator={validator} initialValues={initialData} />);
                 
         const invalidRequiredDiv = queryByTestId('invalid-required-div');
         expect(invalidRequiredDiv).toBeNull();
@@ -101,7 +93,7 @@ describe('Form', () => {
         });
         const {
             getByTestId
-        } = render(<FormComponent validate={validator} initialData={initialData} />);
+        } = render(<FormComponent validator={validator} initialValues={initialData} />);
         
         let usernameElement = getByTestId('zeno-form-input-username') as HTMLInputElement;
         fireEvent.change(usernameElement, { target: { value: '1' } });
@@ -128,7 +120,7 @@ describe('Form', () => {
         handleSubmit.mockReturnValue(true);
         const {
             getByTestId
-        } = render(<FormComponent validate={validator} initialData={initialData} handleSubmit={handleSubmit} />);
+        } = render(<FormComponent validator={validator} initialValues={initialData} handleSubmit={handleSubmit} />);
         
         let usernameElement = getByTestId('zeno-form-input-username') as HTMLInputElement;
         fireEvent.change(usernameElement, { target: { value: 'username' } });
@@ -160,7 +152,7 @@ describe('Form', () => {
         handleSubmit.mockReturnValue(Promise.resolve(true));
         const {
             getByTestId
-        } = render(<FormComponent validate={validator} initialData={initialData} handleSubmit={handleSubmit} />);
+        } = render(<FormComponent validator={validator} initialValues={initialData} handleSubmit={handleSubmit} />);
         
         let usernameElement = getByTestId('zeno-form-input-username') as HTMLInputElement;
         fireEvent.change(usernameElement, { target: { value: 'username' } });
