@@ -17,7 +17,7 @@ export enum FormValidationReason {
     Submitting = 'Submitting'
 }
 
-interface FormProps<T> {
+export interface FormProps<T> {
     initialValues: T
     required?: Required<T>
     validator: Validate<T>
