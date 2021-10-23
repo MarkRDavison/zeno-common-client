@@ -1,6 +1,6 @@
 {
   "name": "@mark.davison/zeno-common-client",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Common client utilities",
   "main": "dist/zeno-common-client.js",
   "scripts": {
