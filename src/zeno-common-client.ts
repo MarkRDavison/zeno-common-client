@@ -17,7 +17,7 @@ import {
     useAuth,
     AuthContext,
     AuthEndpoints
-} from './Components/AuthContext'
+} from './Components/AuthContext';
 
 export {
     Alert,

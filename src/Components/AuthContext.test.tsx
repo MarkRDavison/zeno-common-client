@@ -1,19 +1,19 @@
 import React from 'react';
 import { render, act, screen } from '@testing-library/react';
-import PrivateRoute from './PrivateRoute'
-import { createMemoryHistory } from 'history'
-import { Router, Route } from 'react-router-dom'
+import PrivateRoute from './PrivateRoute';
+import { createMemoryHistory } from 'history';
+import { Router, Route } from 'react-router-dom';
 import { AuthContext, AuthEndpoints, UserProfile } from './AuthContext';
 import axios from 'axios';
-import { useAuth } from './AuthContext'
+import { useAuth } from './AuthContext';
 
-const rootLocation = 'https://testlocation.com'
-const rootPathname = '/'
+const rootLocation = 'https://testlocation.com';
+const rootPathname = '/';
 const authEndpoints: AuthEndpoints = {
     userEndpoint: '',
     loginEndpoint: 'https://login.endppoint/auth/login',
     logoutEndpoint: ''
-}
+};
 const mockLocation: Location = {
     ancestorOrigins: undefined,
     assign: jest.fn(),
@@ -32,14 +32,14 @@ const mockLocation: Location = {
 let location: Location;
 jest.mock('axios');
 beforeEach(()=>{
-    jest.clearAllMocks()
+    jest.clearAllMocks();
     location = window.location;
     delete window.location;
     window.location = mockLocation;
-})
+});
 afterEach(() => {
     window.location = location;
-})
+});
 
 const TestComponent = (): JSX.Element => {
     const { 
@@ -49,8 +49,8 @@ const TestComponent = (): JSX.Element => {
         <div data-testid='auth-child-element'>
             <button data-testid='LOGOUT' onClick={logout}>LOGOUT</button>
         </div>
-    )
-}
+    );
+};
 const userProfile: UserProfile = {
     sub: 'asdasdasdasd',
     email_verified: false,
@@ -59,7 +59,7 @@ const userProfile: UserProfile = {
     given_name: 'first',
     family_name: 'last',
     email: 'email'
-}
+};
 
 describe('AuthContext', () => {
     test('Accessing private route initially checks existing logged in user', async () => {
@@ -76,8 +76,8 @@ describe('AuthContext', () => {
             );
         });
                 
-        expect(screen.queryByTestId(/auth-child-element/i)).toBeDefined()
-    })
+        expect(screen.queryByTestId(/auth-child-element/i)).toBeDefined();
+    });
 
     test('Accessing public route initially checks existing logged in user', async () => {
         jest.spyOn(axios, 'get').mockResolvedValue({data: userProfile});
@@ -93,8 +93,8 @@ describe('AuthContext', () => {
             );
         });
                 
-        expect(screen.queryByTestId(/auth-child-element/i)).toBeDefined()
-    })
+        expect(screen.queryByTestId(/auth-child-element/i)).toBeDefined();
+    });
 
     test('Accessing public route where checking for user throws sets not logged in', async () => {
         jest.spyOn(axios, 'get').mockRejectedValue(new Error());
@@ -110,8 +110,8 @@ describe('AuthContext', () => {
             );
         });
                 
-        expect(screen.queryByTestId(/auth-child-element/i)).toBeDefined()
-    })
+        expect(screen.queryByTestId(/auth-child-element/i)).toBeDefined();
+    });
 
     test('Accessing private route with no logged in user redirects to loginEndpoint', async () => {
         jest.spyOn(axios, 'get').mockResolvedValue({data: null});
@@ -128,7 +128,7 @@ describe('AuthContext', () => {
         });
 
         expect(mockLocation.assign).toBeCalledWith(authEndpoints.loginEndpoint + '?redirect_uri=' + rootPathname);
-    })
+    });
 
     test('Logging out redirects to logout endpoint', async () => {
         jest.spyOn(axios, 'get').mockResolvedValue({data: userProfile});
@@ -144,8 +144,8 @@ describe('AuthContext', () => {
             );
         });
         
-        const button = screen.queryByTestId(/LOGOUT/i)
-        act(() => button.click())
+        const button = screen.queryByTestId(/LOGOUT/i);
+        act(() => button.click());
         expect(mockLocation.assign).toBeCalledWith(authEndpoints.logoutEndpoint);
-    })
-})
+    });
+});

@@ -39,7 +39,7 @@ export const Context = React.createContext<ContextProps>({
 
 export const AuthConsumer = Context.Consumer;
 export const AuthProvider = Context.Provider;
-export const AuthContext = (props: AuthProviderProps) => {
+export const AuthContext = (props: AuthProviderProps): JSX.Element => {
     const [user, setUser] = useState<UserProfile | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoggingIn, setIsLoggingIn] = useState(true);
@@ -62,7 +62,7 @@ export const AuthContext = (props: AuthProviderProps) => {
                     setIsLoggingIn(false);
                 }
             })
-            .catch(e => {
+            .catch(() => {
                 setUser(null);
                 setIsLoggedIn(false);
                 setIsLoggingIn(false);
@@ -80,6 +80,6 @@ export const AuthContext = (props: AuthProviderProps) => {
             {props.children}
         </Context.Provider>
     );
-}
+};
 
 export const useAuth = (): ContextProps => useContext(Context);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
-import Form, { BaseErrorMessage, BaseForm, BaseInput, Validate, Required, FormProps } from './Form';
+import Form, { BaseErrorMessage, BaseForm, BaseInput, Required, FormProps } from './Form';
 
 interface FormData {
     username: string
