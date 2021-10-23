@@ -10,9 +10,18 @@ import Form, {
     Touched,
     FormProps,
     ValidationResult
-} from './Form';
+} from './Components/Form';
+import PrivateRoute from './Components/PrivateRoute';
+
+import {
+    useAuth,
+    AuthContext,
+    AuthEndpoints
+} from './Components/AuthContext'
 
 export {
     Alert,
-    Form, BaseErrorMessage, BaseForm, BaseInput, FormProps, Validate, Required, Errors, FormValidationReason, Touched, ValidationResult
+    Form, BaseErrorMessage, BaseForm, BaseInput, FormProps, Validate, Required, Errors, FormValidationReason, Touched, ValidationResult,
+    useAuth, AuthContext, AuthEndpoints,
+    PrivateRoute
 };

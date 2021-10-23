@@ -10,5 +10,8 @@
             "lines": 100,
             "functions": 100
         }
+    },
+    "moduleNameMapper": {
+        "^react($|/.+)": "<rootDir>/node_modules/react$1"
     }
 }
