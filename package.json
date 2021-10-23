@@ -1,6 +1,6 @@
 {
   "name": "@mark.davison/zeno-common-client",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Common client utilities",
   "main": "dist/zeno-common-client.js",
   "scripts": {
@@ -44,7 +44,7 @@
     "react-dom": "^17.0.2"
   },
   "publishConfig": {
-    "@mark.davison:registry": "https://gitlab.markdavison.kiwi/api/v4/packages/npm/"
+    "@mark.davison:registry": "https://gitlab.markdavison.kiwi/api/v4/projects/8/packages/npm/"
   },
   "dependencies": {
     "@mark.davison/zeno-common": "^0.1.5",
