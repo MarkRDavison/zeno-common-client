@@ -4,6 +4,7 @@ import { useAuth } from './AuthContext';
 
 interface PrivateRouteProps {
     component: () => JSX.Element
+    path: string
 }
 
 const PrivateRoute = (props: PrivateRouteProps): JSX.Element => {
