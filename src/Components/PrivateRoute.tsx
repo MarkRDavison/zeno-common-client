@@ -14,14 +14,14 @@ const PrivateRoute = (props: PrivateRouteProps): JSX.Element => {
     const renderFunction = (Component: () => JSX.Element) => (props: unknown) => {    
         const ifValue = !!Component && (isLoggedIn || isLoggingIn);
         if (!isLoggedIn && isLoggingIn){
-            return <div>LOADING...</div>;
+            return <div>LOADING... - still logging in</div>;
         }
         if (ifValue) {
             return <Component {...props} />;
         }
         else {
             login();
-            return <div>LOADING...</div>;
+            return <div>LOADING... redirect to login</div>;
         }
     };
 
