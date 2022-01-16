@@ -16,12 +16,16 @@ import PrivateRoute from './Components/PrivateRoute';
 import {
     useAuth,
     AuthContext,
-    AuthEndpoints
+    AuthEndpoints,
+    AuthConsumer,
+    AuthProvider,
+    Context,
+    UserProfile
 } from './Components/AuthContext';
 
 export {
     Alert,
     Form, BaseErrorMessage, BaseForm, BaseInput, FormProps, Validate, Required, Errors, FormValidationReason, Touched, ValidationResult,
-    useAuth, AuthContext, AuthEndpoints,
+    useAuth, AuthContext, AuthEndpoints,AuthConsumer, AuthProvider, Context, UserProfile,
     PrivateRoute
 };
