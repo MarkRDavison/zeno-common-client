@@ -8,7 +8,7 @@ interface FormData {
 }
 
 interface ResponseData {
-
+    state: boolean
 }
 
 const FormComponent = (props: FormProps<FormData, ResponseData>): JSX.Element => {
@@ -121,9 +121,10 @@ describe('Form', () => {
             }
         });
         const handleSubmit = jest.fn();
-        handleSubmit.mockReturnValue({success: true, response: {}});
+        handleSubmit.mockReturnValue({success: true, response: {
+            state: true
+        }});
         const afterSubmit = jest.fn();
-        afterSubmit.mockImplementation((s, r) => {});
         const {
             getByTestId
         } = render(<FormComponent validator={validator} initialValues={initialData} handleSubmit={handleSubmit} afterSubmit={afterSubmit} />);
@@ -156,9 +157,8 @@ describe('Form', () => {
             }
         });
         const handleSubmit = jest.fn();        
-        handleSubmit.mockReturnValue(Promise.resolve({success: false, response: {}}));
+        handleSubmit.mockReturnValue(Promise.resolve({success: false, response: {state: true}}));
         const afterSubmit = jest.fn();
-        afterSubmit.mockImplementation((s, r) => {});
         const {
             getByTestId
         } = render(<FormComponent validator={validator} initialValues={initialData} handleSubmit={handleSubmit} afterSubmit={afterSubmit} />);
