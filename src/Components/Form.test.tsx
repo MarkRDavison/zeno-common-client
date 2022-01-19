@@ -7,9 +7,13 @@ interface FormData {
     password: string
 }
 
-const FormComponent = (props: FormProps<FormData>): JSX.Element => {
+interface ResponseData {
+
+}
+
+const FormComponent = (props: FormProps<FormData, ResponseData>): JSX.Element => {
     return (
-        <Form<FormData>
+        <Form<FormData, ResponseData>
             initialValues={props.initialValues}
             required={props.required}
             validator={props.validator}
@@ -117,10 +121,12 @@ describe('Form', () => {
             }
         });
         const handleSubmit = jest.fn();
-        handleSubmit.mockReturnValue(true);
+        handleSubmit.mockReturnValue({success: true, response: {}});
+        const afterSubmit = jest.fn();
+        afterSubmit.mockImplementation((s, r) => {});
         const {
             getByTestId
-        } = render(<FormComponent validator={validator} initialValues={initialData} handleSubmit={handleSubmit} />);
+        } = render(<FormComponent validator={validator} initialValues={initialData} handleSubmit={handleSubmit} afterSubmit={afterSubmit} />);
         
         let usernameElement = getByTestId('zeno-form-input-username') as HTMLInputElement;
         fireEvent.change(usernameElement, { target: { value: 'username' } });
@@ -134,6 +140,7 @@ describe('Form', () => {
         });
 
         expect(handleSubmit).toHaveBeenCalledTimes(1);
+        expect(afterSubmit).toHaveBeenCalledTimes(1);
     });
 
     test('when submitted with error does not invoke submit', async () => {
@@ -149,10 +156,12 @@ describe('Form', () => {
             }
         });
         const handleSubmit = jest.fn();        
-        handleSubmit.mockReturnValue(Promise.resolve(true));
+        handleSubmit.mockReturnValue(Promise.resolve({success: false, response: {}}));
+        const afterSubmit = jest.fn();
+        afterSubmit.mockImplementation((s, r) => {});
         const {
             getByTestId
-        } = render(<FormComponent validator={validator} initialValues={initialData} handleSubmit={handleSubmit} />);
+        } = render(<FormComponent validator={validator} initialValues={initialData} handleSubmit={handleSubmit} afterSubmit={afterSubmit} />);
         
         let usernameElement = getByTestId('zeno-form-input-username') as HTMLInputElement;
         fireEvent.change(usernameElement, { target: { value: 'username' } });

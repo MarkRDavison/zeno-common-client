@@ -17,12 +17,12 @@ export enum FormValidationReason {
     Submitting = 'Submitting'
 }
 
-export interface FormProps<T> {
+export interface FormProps<T, TResponse> {
     initialValues: T
     required?: Required<T>
     validator: Validate<T>
-    handleSubmit?: (values: T) => Promise<boolean>
-    afterSubmit?: (success: boolean) => void
+    handleSubmit?: (values: T) => Promise<{success:boolean, response: TResponse}>
+    afterSubmit?: (success:boolean, response: TResponse) => void
     children?: (
         isSubmitting: boolean,
         invalidRequired: boolean,
@@ -55,7 +55,7 @@ function cloneWithDefaultValues<T, U> (input: T, defaultValue: U): Record<keyof 
 }
 
 
-export default function Form<T>(props: FormProps<T>): JSX.Element {
+export default function Form<T, TResponse>(props: FormProps<T, TResponse>): JSX.Element {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [touched, setTouched] = useState<Touched<T>>(cloneWithDefaultValues(props.initialValues, false));
     const [required, setRequired] = useState<Touched<T>>(props.required ||  props.validator(props.initialValues, touched, cloneWithDefaultValues(props.initialValues, false), FormValidationReason.ValueChange).required);
@@ -103,7 +103,7 @@ export default function Form<T>(props: FormProps<T>): JSX.Element {
     }
 
     return (
-        <FormProvider value={{formData, touched, errors, handleChange, formSubmitHandle: (event: FormEvent<HTMLElement>) => formSubmit(event).then(props.afterSubmit)}}>
+        <FormProvider value={{formData, touched, errors, handleChange, formSubmitHandle: (event: FormEvent<HTMLElement>) => formSubmit(event).then((v) => props.afterSubmit(v?.success ?? false, v?.response ?? undefined))}}>
             {props.children(isSubmitting, invalidRequired, formData, touched, errors)}
         </FormProvider>
     );
